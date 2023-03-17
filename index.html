@@ -16,7 +16,7 @@
 			integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 			crossorigin="anonymous"></script>
 		<script>
-		function SubForm (e){
+		function SubForm (){
 			$.ajax({
 				url:'https://api.apispreadsheets.com/data/YuCfQRA3zg37DD7U/',
 				type:'post',
@@ -28,6 +28,7 @@
 				alert("There was an error :(")
 				}
 			});
+			return false;
 		}
 		</script>
 	</head>
@@ -54,7 +55,7 @@
 									<h1>棒球紀錄趣</h1>
 									<p>本網站由成功大學同學完成，歡迎大家自由使用，想使用請按右邊箭頭</p>
 								</header>
-								<a href="#work" class="jumplink pic">
+								<a href="#record" class="jumplink pic">
 									<span class="arrow icon solid fa-chevron-right"><span>See my work</span></span>
 									<img src="images/me.jpg" alt="" />
 								</a>
@@ -65,19 +66,32 @@
 								<header>
 									<h2>逐一打席紀錄</h2>
 								</header>
-								<form action="#" method="post">
+								<form id="myForm" onsubmit="return SubForm()">
 									<div>
 										<div class="row">
-											<div class="col-12">
-												<input style="background: #f4f4f4;border: none;padding: 8px 14px;" type="date" name="date" placeholder="Subject" />
+											<div class="col-6 col-12-medium">
+												<input style="background: #f4f4f4;border: none;padding: 8px 14px; width: 100%" type="date" name="date" placeholder="Subject" required/>
 											</div>
 											<div class="col-6 col-12-medium">
-												<input type="text" name="name" placeholder="打者 Hitter's Name" />
+												<select name="result">
+													<option value="">第幾打席 Plate appearance</option>
+													<option>1</option>
+													<option>2</option>
+													<option>3</option>
+													<option>4</option>
+													<option>5</option>
+													<option>6</option>
+													<option>7</option>
+													<option>8</option>
+												</select>
+											</div>
+											<div class="col-6 col-12-medium">
+												<input type="text" name="name" placeholder="打者 Hitter's Name" required/>
 											</div>
 											
 											<div class="col-6 col-12-medium">
-												<select name="result">
-													<option>打擊結果 Result</option>
+												<select name="result" required>
+													<option value="">打擊結果 Result</option>
 													<option>一安 Single</option>
 													<option>二安 Double</option>
 													<option>三安 Triple</option>
@@ -90,8 +104,8 @@
 											</div>
 
 											<div class="col-6 col-12-medium">
-												<select name="position">
-													<option>本打席最後一球位置 Position</option>
+												<select name="position" required>
+													<option value="">本打席最後一球位置 Position</option>
 													<option>1</option>
 													<option>2</option>
 													<option>3</option>
@@ -105,13 +119,13 @@
 											</div>
 
 											<div class="col-6 col-12-medium">
-												<input type="text" name="others" placeholder="備註欄" />
+												<input type="text" name="others" placeholder="備註欄 Others" />
 											</div>
 											<!--<div class="col-12">
 												<textarea name="message" placeholder="Message" rows="6"></textarea>
 											</div>!-->
 											<div class="col-12">
-												<input onclick="SubForm()" type="button" value="Send Message" />
+												<input type="submit" value="送出此筆數據 Send Message" />
 											</div>
 										</div>
 									</div>
