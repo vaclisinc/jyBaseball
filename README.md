@@ -1,10 +1,11 @@
-# [jyBaseball(棒球紀錄趣)](https://vaclisinc.github.io/jyBaseball/) - Baseball Data Analysis Website
+# [jyBaseball](https://vaclisinc.github.io/jyBaseball/) - Baseball Data Analysis Website
 
-[jyBaseball](https://vaclisinc.github.io/jyBaseball/) is a data analysis tool designed for baseball enthusiasts and professionals. It provides an intuitive interface for recording and analyzing baseball game data, with a special focus on K-Zone batting average analysis. This project aims to digitize traditional paper-based records and offer advanced data analysis tools for Chinese Professional Baseball League (CPBL) and amateur baseball games.
+[jyBaseball(棒球紀錄趣)](https://vaclisinc.github.io/jyBaseball/) is a data analysis tool designed for baseball enthusiasts and professionals. It provides an intuitive interface for recording and analyzing baseball game data, with a special focus on K-Zone batting average analysis. This project aims to digitize traditional paper-based records and offer advanced data analysis tools for Chinese Professional Baseball League (CPBL) and amateur baseball games.
 
->[![jyBaseball](https://raw.githubusercontent.com/SimonLiu423/cc_diary/ec4694b2518ead544a0f982be761f6c4276f51dd/presentation/ccDiary_intro.gif)](https://github.com/SimonLiu423/cc_diary/blob/61104e21db6f5a4cf7f9cfe8a971b073cdf62ecd/presentation/ccDiary.pdf)
+>[![jyBaseball](https://raw.githubusercontent.com/vaclisinc/jyBaseball/b09922b168721499f2b2e30d0b84bb3e34f5e21a/preview.jpg)](https://github.com/vaclisinc/jyBaseball/blob/b09922b168721499f2b2e30d0b84bb3e34f5e21a/presentation.pdf)
 ><br>*Click on the picture to view our full presentation PDF*
 
+https://github.com/
 ## Current Status and Limitations
 
 **Important Note:** jyBaseball is currently in a prototype stage. The full functionality, including the generation of hitting zone charts, is only available when the backend is running on the developer's local machine. We are actively working on deploying a stable backend solution to make all features accessible online.
