@@ -5,7 +5,6 @@
 >[![jyBaseball](https://raw.githubusercontent.com/vaclisinc/jyBaseball/b09922b168721499f2b2e30d0b84bb3e34f5e21a/preview.jpg)](https://github.com/vaclisinc/jyBaseball/blob/b09922b168721499f2b2e30d0b84bb3e34f5e21a/presentation.pdf)
 ><br>*Click on the picture to view our full presentation PDF*
 
-https://github.com/
 ## Current Status and Limitations
 
 **Important Note:** jyBaseball is currently in a prototype stage. The full functionality, including the generation of hitting zone charts, is only available when the backend is running on the developer's local machine. We are actively working on deploying a stable backend solution to make all features accessible online.
