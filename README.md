@@ -47,7 +47,7 @@
 
 To use the current version:
 
-1. Visit [Baseball Stats Fun](https://vaclisinc.github.io/baseball/)
+1. Visit [jyBaseball](https://vaclisinc.github.io/jyBaseball/)
 2. Input detailed game data
 3. View stored data on the website
 
