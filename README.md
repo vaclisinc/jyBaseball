@@ -1,6 +1,6 @@
-# [jyBaseball](https://vaclisinc.github.io/jyBaseball/) - Baseball Data Analysis Website
+# [jyBaseball](https://vaclisinc.github.io/jyBaseball/) - Baseball Data Digitization and Analysis Platform
 
-[jyBaseball(棒球紀錄趣)](https://vaclisinc.github.io/jyBaseball/) is a data analysis tool designed for baseball enthusiasts and professionals. It provides an intuitive interface for recording and analyzing baseball game data, with a special focus on K-Zone batting average analysis. This project aims to digitize traditional paper-based records and offer advanced data analysis tools for Chinese Professional Baseball League (CPBL) and amateur baseball games.
+[jyBaseball(棒球紀錄趣)](https://vaclisinc.github.io/jyBaseball/) is a platform designed to digitize traditional paper-based baseball records and provide advanced data analysis tools. Our goal is to support both professional and amateur baseball teams by offering intuitive tools for recording, storing, and analyzing game data. One of our key features is K-Zone batting average analysis, but we place equal emphasis on making baseball data more accessible and actionable by moving away from paper-based systems.
 
 >[![jyBaseball](https://raw.githubusercontent.com/vaclisinc/jyBaseball/b09922b168721499f2b2e30d0b84bb3e34f5e21a/preview.jpg)](https://github.com/vaclisinc/jyBaseball/blob/b09922b168721499f2b2e30d0b84bb3e34f5e21a/presentation.pdf)
 ><br>*Click on the picture to view our full presentation PDF*
@@ -9,26 +9,30 @@
 
 **Important Note:** jyBaseball is currently in a prototype stage. The full functionality, including the generation of hitting zone charts, is only available when the backend is running on the developer's local machine. We are actively working on deploying a stable backend solution to make all features accessible online.
 
-## Features
+## Key Features
 
-1. **Data Input and Storage**
-   - Intuitive interface for inputting detailed game statistics
-   - Secure data storage using Google Sheets
+1. **Paper-based Data Digitization**
+   - Convert traditional paper-based baseball records into digital form
+   - Secure and centralized data storage using Google Sheets for easy access and management
 
-2. **Advanced Statistical Analysis**
+2. **Data Input and Storage**
+   - User-friendly interface for inputting detailed game statistics
+   - Centralized storage of game data to support long-term tracking and analysis
+
+3. **Advanced Statistical Analysis**
    - Comprehensive calculations based on input data
-   - Generation of various statistical insights
+   - Generation of various statistical insights, including K-Zone batting average analysis
 
-3. **Visual Representation of Data**
+4. **Visual Representation of Data**
    - Visual representation of hitting patterns and weaknesses
    - Generation of hitting zone charts and other statistical graphs
-   - Note: Full visualization features are currently available only when the backend is running locally, but it is still available to see history records.
+   - Note: Full visualization features are currently available only when the backend is running locally, but history records can still be viewed
 
-4. **Cross-platform Compatibility**
+5. **Cross-platform Compatibility**
    - Web-based design accessible from any device
    - Responsive interface for desktop and mobile use
 
-5. **Real-time Data Processing** (When backend is active)
+6. **Real-time Data Processing** (When backend is active)
    - Instant data analysis and visualization
    - Quick insights for coaches and analysts
 
@@ -75,8 +79,8 @@ This project is for educational and non-commercial use only. All data and analys
 jyBaseball is developed with passion by:
 
 - 游松澤 (Yu Song-Ze)
-- 張羿軒 (Zhang Yi-Xuan)
 - 張昀棠 (Zhang Yun-Tang)
+- 張羿軒 (Zhang Yi-Xuan)
 
 Project Team: vaclis. 
 
