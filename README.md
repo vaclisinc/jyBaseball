@@ -1,10 +1,14 @@
-# [InningiQ](https://vaclisinc.github.io/InningiQ/) - AI-Powered Baseball Analysis Assistant (formerly jyBaseball)
+# [InningIQ](https://vaclisinc.github.io/InningIQ/) - AI-Powered Baseball Analysis Assistant (formerly jyBaseball)
 
-Important Update: The jyBaseball project described in this README is now outdated. The project has been renamed and upgraded to the InningiQ initiative. InningiQ is a more comprehensive AI-driven baseball analysis platform that incorporates the core functionalities of jyBaseball while adding new features. Please refer to the latest InningiQ documentation for current features and usage instructions.
+Important Update: The jyBaseball project described in this README is now outdated. The project has been renamed and upgraded to the InningiQ initiative. 
+InningiQ is a more comprehensive AI-driven baseball analysis platform that incorporates the core functionalities of jyBaseball while adding new features. 
+Please refer to the latest InningiQ documentation for current features and usage instructions.
 
 The following is the description of the original jyBaseball project, provided for reference only:
 
-**重要更新**: 本 README 所描述的 jyBaseball 項目已經過時。此專案已更名並升級為 InningiQ 計劃。 InningiQ 是一個更全面的 AI 驅動的棒球分析平台，融合了 jyBaseball 的核心功能並添加了新的功能。請參考最新的 InningiQ 文件以取得目前功能和使用說明。
+**重要更新**: 
+本 README 所描述的 jyBaseball 項目已經過時。此專案已更名並升級為 InningiQ 計劃。
+InningiQ 是一個更全面的 AI 驅動的棒球分析平台，融合了 jyBaseball 的核心功能並添加了新的功能。請參考最新的 InningiQ 文件以取得目前功能和使用說明。
 
 以下是原 jyBaseball 項目的描述，僅供參考：
 ---
