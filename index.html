@@ -19,16 +19,32 @@
 	<script>
 		'use strict';
 		// const apiEndPoint = 'https://script.google.com/macros/s/AKfycbyEqnJGcnvQN8IDg6mXrvWT78l5U8VpxR7Sp6xuzv299M9UyO5qq5VfmH_2BbfR1IehcQ/exec'; //v1
-		const apiEndPoint = 'http://www.vaclis.csa.cs.nthu.edu.tw/'; //v2
+		const apiEndPoint = 'https://www.vaclis.csa.cs.nthu.edu.tw/'; //v2
 		function subForm(e) {
 			e.preventDefault();
 			const userData = $("#myForm").serializeArray();
 			console.log(userData);
-
+			// v1
+			// $.ajax({
+			// 	url: apiEndPoint + '?n=data&t=a',
+			// 	type: 'post',
+			// 	data: JSON.stringify(userData),
+			// 	success: function () {
+			// 		alert("Form Data Submitted :)")
+			// 	},
+			// 	error: function () {
+			// 		alert("There was an error :(")
+			// 	}
+			// });
 			$.ajax({
-				url: apiEndPoint + '?n=data&t=a',
+				url: apiEndPoint,
 				type: 'post',
-				data: JSON.stringify(userData),
+				data: JSON.stringify({
+					n: 'data',
+					t: 'a',
+					userData: userData
+				}),
+				contentType: "application/json",
 				success: function () {
 					alert("Form Data Submitted :)")
 				},
@@ -36,6 +52,7 @@
 					alert("There was an error :(")
 				}
 			});
+
 		}
 
 		let openedImage, openedImageName;
@@ -109,9 +126,24 @@
 			// console.log(userImage);
 		}
 
+		// 	v1
+		// function fetchHistoryImage() {
+		// 	// $.ajax({ url: apiEndPoint + '?n=image&width=2', success: updateUserImage });
+		// }
+		//  v2
 		function fetchHistoryImage() {
-			$.ajax({ url: apiEndPoint + '?n=image&width=2', success: updateUserImage });
+			$.ajax({
+				url: apiEndPoint + '?n=image&width=2',
+				type: 'get',
+				success: function (response) {
+					updateUserImage(response);
+				},
+				error: function () {
+					alert("Failed to fetch history images.");
+				}
+			});
 		}
+
 
 		window.onload = function () {
 			imagesParentElement = document.getElementById('images');
@@ -341,7 +373,9 @@
 					<h2>Hitter's History Records Data 打者數據資料</h2>
 				</header>
 				<p>
-					<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR1Chn7vPQWG6ADxR2hW0qH06dsEOvlHQoWibfPwKQOFmhEjNH2bNmepZuFnlieRQ6D29cKGLbSANzS/pubhtml?widget=true&amp;headers=false" style="width: 100%; height: 76vh;"></iframe>
+					<iframe
+						src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR1Chn7vPQWG6ADxR2hW0qH06dsEOvlHQoWibfPwKQOFmhEjNH2bNmepZuFnlieRQ6D29cKGLbSANzS/pubhtml?widget=true&amp;headers=false"
+						style="width: 100%; height: 76vh;"></iframe>
 				</p>
 			</article>
 
@@ -438,4 +472,5 @@
 		document.addEventListener("mousedown", closeAllSelect);
 	</script>
 </body>
+
 </html>

@@ -10,10 +10,18 @@ import requests
 import matplotlib.pyplot as plt
 import seaborn as sns
 import time
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # FastAPI 應用
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 你可以根據需求設置具體允許的域名
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # 設定 Google Sheets API 的範圍
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
