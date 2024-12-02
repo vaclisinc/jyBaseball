@@ -1,0 +1,1 @@
+This original version finished in freshman year is using google scripts api as API, google sheets as database, python as backend.
