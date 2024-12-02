@@ -133,7 +133,7 @@
 		//  v2
 		function fetchHistoryImage() {
 			$.ajax({
-				url: apiEndPoint + '?n=image&width=2',
+				url: apiEndPoint + '?n=image',
 				type: 'get',
 				success: function (response) {
 					updateUserImage(response);
