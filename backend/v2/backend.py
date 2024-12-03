@@ -61,62 +61,158 @@ def calculate_avg(df):
     return avg_df
 
 # 定義背景更新函數
-def refresh_data():
-    try:
-        df = pd.read_csv("https://docs.google.com/spreadsheets/d/1n3Xt5iemJ3WWjlksEaU6JfNDv_9FX4CStTzjayMRwEU/export?format=csv&gid=0")
-        avg_df = calculate_avg(df)
-        avg_df = avg_df.transpose()
+def refreshData():
+    print("\rStart refresh", end="")
+    df = pd.read_csv("https://docs.google.com/spreadsheets/d/1n3Xt5iemJ3WWjlksEaU6JfNDv_9FX4CStTzjayMRwEU/export?format=csv&gid=0")
+    avg_df = calculate_avg(df)
+    avg_df = avg_df.transpose()
 
-        # Get exist image
-        exist_image_data_request = requests.get(f"http://0.0.0.0:8000/?n=image&width=2")
-        exist_image_data = exist_image_data_request.json()
-        values = exist_image_data[1:]
-        exist_image_data = {i[0]: i[1] for i in values}
+    # Get exist image
+    existImageDataRequest = requests.get(apiEndpoint + '?n=image&width=2')
+    existImageData = existImageDataRequest.json()
+    # values = existImageData[1:]
+    existImageData = {i[0]: i[1] for i in existImageData}
 
-        unique_names = df['name'].unique()
-        new_frames = {}
+    unique_names = df['name'].unique()
+    new_frames = {}  # everybody's 9 block
+    for name in unique_names:
+        new_frame = pd.DataFrame(0, index=range(0, 8), columns=range(0, 8), dtype=float)
 
-        for name in unique_names:
-            new_frame = pd.DataFrame(0, index=range(0, 8), columns=range(0, 8), dtype=float)
-            # Data filling loop (略)
-            new_frames[name] = new_frame
+        # 填充九宮格數據
+        for i in range(0, 3):
+            for j in range(0, 3):
+                try:
+                    value = avg_df.loc[3 * i + j + 1, name]
+                except KeyError:
+                    value = np.nan  # 如果找不到數據，設為 NaN
 
-        for player_name in new_frames:
-            plt.clf()
-            player_frame = new_frames[player_name]
-            sns_plot = sns.heatmap(player_frame, center=0.3, vmin=0, vmax=1, cmap='Blues', square=True, fmt=".3f")
-            plt.xticks([])
-            plt.yticks([])
+                new_frame.loc[i * 2 + 1, j * 2 + 1] = value
+                new_frame.loc[i * 2 + 1, j * 2 + 2] = value
+                new_frame.loc[i * 2 + 2, j * 2 + 1] = value
+                new_frame.loc[i * 2 + 2, j * 2 + 2] = value
 
-            # Create image
-            new_image_bytes = io.BytesIO()
-            plt.savefig(new_image_bytes, format='png', bbox_inches='tight')
-            new_image_bytes.seek(0)
-            new_image_base64 = base64.b64encode(new_image_bytes.read()).decode()
+        # 四角數據填充
+        for idx, (positions, label) in enumerate([((0, 0), (1, 0), (2, 0), (3, 0), (0, 1), (0, 2), (0, 3)),  # 左上
+                                                  ((0, 4), (0, 5), (0, 6), (0, 7), (1, 7), (2, 7), (3, 7)),  # 右上
+                                                  ((4, 0), (5, 0), (6, 0), (7, 0), (7, 1), (7, 2), (7, 3)),  # 左下
+                                                  ((7, 4), (7, 5), (7, 6), (7, 7), (6, 7), (5, 7), (4, 7))]):  # 右下
+            try:
+                value = avg_df.loc[10 + idx, name]
+            except KeyError:
+                value = np.nan
 
-            # Send image
-            if player_name not in exist_image_data or exist_image_data[player_name] != new_image_base64:
-                result = requests.post(f"http://0.0.0.0:8000/?n=image", json={
-                    "key": player_name,
-                    "values": [new_image_base64]
-                })
-                if result.status_code == 200:
-                    print("Success")
-                else:
-                    print("Error")
+            for y, x in positions:
+                new_frame.loc[y, x] = value
 
-            if player_name in exist_image_data:
-                exist_image_data.pop(player_name)
+        new_frames[name] = new_frame
 
-        # Delete nonexist player
-        requests.post(f"http://0.0.0.0:8000/?n=image&t=d", json={
-            "key": [i for i in exist_image_data],
-        })
+    # 生成熱力圖
+    for playerName in new_frames:
+        plt.clf()
+        playerFrame = new_frames[playerName]
 
-        plt.close()
-        print("Data refresh done.")
-    except Exception as e:
-        print(f"Error refreshing data: {e}")
+        # 使用 seaborn 生成熱力圖
+        sns_plot = sns.heatmap(playerFrame, center=0.3, vmin=0, vmax=1, cmap='Blues', square=True, fmt=".3f")
+        plt.xticks([])
+        plt.yticks([])
+
+        # 動態標註九宮格內的數據
+        for i in range(0, 3):
+            for j in range(0, 3):
+                value = playerFrame.iloc[i * 2 + 1, j * 2 + 1]
+                color = 'black' if not pd.isna(value) else 'red'
+                value = "%.3f" % value if not pd.isna(value) else 'NO DATA'
+                sns_plot.text(j * 2 + 1.5, i * 2 + 1.5, value, ha='center', va='center', color=color)
+
+        # 動態標註四角數據
+        for i, j in ((0, 0), (0, 4), (7, 0), (7, 4)):
+            value = playerFrame.iloc[i, j]
+            color = 'black' if not pd.isna(value) else 'red'
+            value = "%.3f" % value if not pd.isna(value) else 'NO DATA'
+            sns_plot.text(j + 0.5, i + 0.5, value, ha='center', va='center', color=color)
+
+        # 生成圖像並轉為 Base64
+        newImageByts = io.BytesIO()
+        plt.savefig(newImageByts, format='png', bbox_inches='tight')
+        newImageByts.seek(0)
+        newImageBase64 = base64.b64encode(newImageByts.read()).decode()
+
+        # 發送新生成的圖像
+        result = None
+        if playerName not in existImageData or existImageData[playerName] != newImageBase64:
+            result = requests.post(apiEndpoint + '?n=image', json={"key": playerName, "values": [newImageBase64]})
+            print()
+            print(playerFrame)
+            if result.status_code == 200:
+                print("Success")
+            else:
+                print("Error")
+
+        if playerName in existImageData:
+            existImageData.pop(playerName)
+
+    # 刪除不存在的球員圖像
+    requests.post(apiEndpoint + '?n=image&t=d', json={"key": [i for i in existImageData]})
+
+    plt.close()
+    print('\rDone          ', end="")
+    
+# def refresh_data():
+#     try:
+#         df = pd.read_csv("https://docs.google.com/spreadsheets/d/1n3Xt5iemJ3WWjlksEaU6JfNDv_9FX4CStTzjayMRwEU/export?format=csv&gid=0")
+#         avg_df = calculate_avg(df)
+#         avg_df = avg_df.transpose()
+
+#         # Get exist image
+#         exist_image_data_request = requests.get(f"http://0.0.0.0:8000/?n=image&width=2")
+#         exist_image_data = exist_image_data_request.json()
+#         values = exist_image_data[1:]
+#         exist_image_data = {i[0]: i[1] for i in values}
+
+#         unique_names = df['name'].unique()
+#         new_frames = {}
+
+#         for name in unique_names:
+#             new_frame = pd.DataFrame(0, index=range(0, 8), columns=range(0, 8), dtype=float)
+#             # Data filling loop (略)
+#             new_frames[name] = new_frame
+
+#         for player_name in new_frames:
+#             plt.clf()
+#             player_frame = new_frames[player_name]
+#             sns_plot = sns.heatmap(player_frame, center=0.3, vmin=0, vmax=1, cmap='Blues', square=True, fmt=".3f")
+#             plt.xticks([])
+#             plt.yticks([])
+
+#             # Create image
+#             new_image_bytes = io.BytesIO()
+#             plt.savefig(new_image_bytes, format='png', bbox_inches='tight')
+#             new_image_bytes.seek(0)
+#             new_image_base64 = base64.b64encode(new_image_bytes.read()).decode()
+
+#             # Send image
+#             if player_name not in exist_image_data or exist_image_data[player_name] != new_image_base64:
+#                 result = requests.post(f"http://0.0.0.0:8000/?n=image", json={
+#                     "key": player_name,
+#                     "values": [new_image_base64]
+#                 })
+#                 if result.status_code == 200:
+#                     print("Success")
+#                 else:
+#                     print("Error")
+
+#             if player_name in exist_image_data:
+#                 exist_image_data.pop(player_name)
+
+#         # Delete nonexist player
+#         requests.post(f"http://0.0.0.0:8000/?n=image&t=d", json={
+#             "key": [i for i in exist_image_data],
+#         })
+
+#         plt.close()
+#         print("Data refresh done.")
+#     except Exception as e:
+#         print(f"Error refreshing data: {e}")
 
 # API 路由
 @app.get("/")
