@@ -129,7 +129,7 @@ async def get_data(n: str, width: int, background_tasks: BackgroundTasks):
         # # 在讀取資料時觸發更新
         # background_tasks.add_task(refresh_data)
 
-        return JSONResponse(content=truncated_values)
+        return JSONResponse(content={"data": truncated_values})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

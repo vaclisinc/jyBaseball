@@ -85,45 +85,91 @@
 
 		let imagesParentElement;
 		let userImage = {};
+		// function updateUserImage(r) {
+		// 	r = JSON.parse(r).slice(1);
+		// 	const deletedData = Object.keys(userImage);
+		// 	for (const user of r) {
+		// 		const userName = user[0];
+		// 		const userImageBase64 = user[1];
+		// 		const lastUserImage = userImage[userName];
+		// 		if (!lastUserImage || lastUserImage.imgBase64 !== userImageBase64) {
+		// 			console.log('update', userName);
+		// 			const ele = document.createElement('div');
+		// 			ele.className = 'col-4 col-6-medium col-12-small';
+
+		// 			const imageUrl = 'data:image/png;base64,' + userImageBase64;
+		// 			ele.innerHTML = `<h4 class="fit text-center">${userName}<h4/>
+		// 					<img class="image fit imagePointer" data-name="${userName}" onclick="openImage(this)" src="${imageUrl}" alt=""/>`;
+
+		// 			if (userName === openedImageName)
+		// 				updateOpenImage(imageUrl);
+
+		// 			if (lastUserImage) {
+		// 				imagesParentElement.replaceChild(ele, lastUserImage.img);
+		// 				lastUserImage.img = ele;
+		// 				lastUserImage.imgBase64 = userImageBase64;
+		// 			} else {
+		// 				userImage[userName] = { imgBase64: userImageBase64, img: ele };
+		// 				imagesParentElement.appendChild(ele);
+		// 			}
+		// 		}
+
+		// 		// Remove exist user
+		// 		deletedData.splice(deletedData.indexOf(userName), 1);
+		// 	}
+
+		// 	// Delete user
+		// 	for (const i of deletedData) {
+		// 		userImage[i].img.remove();
+		// 		delete userImage[i];
+		// 	}
+		// 	// console.log(userImage);
+		// }
+
 		function updateUserImage(r) {
-			r = JSON.parse(r).slice(1);
-			const deletedData = Object.keys(userImage);
-			for (const user of r) {
-				const userName = user[0];
-				const userImageBase64 = user[1];
-				const lastUserImage = userImage[userName];
-				if (!lastUserImage || lastUserImage.imgBase64 !== userImageBase64) {
-					console.log('update', userName);
-					const ele = document.createElement('div');
-					ele.className = 'col-4 col-6-medium col-12-small';
+			try {
+				const parsedData = JSON.parse(r);
+				const rData = parsedData.data.slice(1); // 如果有標題行，則跳過
+				const deletedData = Object.keys(userImage);
 
-					const imageUrl = 'data:image/png;base64,' + userImageBase64;
-					ele.innerHTML = `<h4 class="fit text-center">${userName}<h4/>
-							<img class="image fit imagePointer" data-name="${userName}" onclick="openImage(this)" src="${imageUrl}" alt=""/>`;
+				for (const user of rData) {
+					const userName = user[0];
+					const userImageBase64 = user[1];
+					const lastUserImage = userImage[userName];
+					if (!lastUserImage || lastUserImage.imgBase64 !== userImageBase64) {
+						console.log('update', userName);
+						const ele = document.createElement('div');
+						ele.className = 'col-4 col-6-medium col-12-small';
 
-					if (userName === openedImageName)
-						updateOpenImage(imageUrl);
+						const imageUrl = 'data:image/png;base64,' + userImageBase64;
+						ele.innerHTML = `<h4 class="fit text-center">${userName}<h4/>
+                    <img class="image fit imagePointer" data-name="${userName}" onclick="openImage(this)" src="${imageUrl}" alt=""/>`;
 
-					if (lastUserImage) {
-						imagesParentElement.replaceChild(ele, lastUserImage.img);
-						lastUserImage.img = ele;
-						lastUserImage.imgBase64 = userImageBase64;
-					} else {
-						userImage[userName] = { imgBase64: userImageBase64, img: ele };
-						imagesParentElement.appendChild(ele);
+						if (userName === openedImageName)
+							updateOpenImage(imageUrl);
+
+						if (lastUserImage) {
+							imagesParentElement.replaceChild(ele, lastUserImage.img);
+							lastUserImage.img = ele;
+							lastUserImage.imgBase64 = userImageBase64;
+						} else {
+							userImage[userName] = { imgBase64: userImageBase64, img: ele };
+							imagesParentElement.appendChild(ele);
+						}
 					}
+
+					// Remove exist user
+					deletedData.splice(deletedData.indexOf(userName), 1);
 				}
 
-				// Remove exist user
-				deletedData.splice(deletedData.indexOf(userName), 1);
+				// Delete user
+				for (const i of deletedData) {
+					userImage[i].img.remove();
+					delete userImage[i];
+				}
+			} catch (error) {
+				console.error("Failed to parse JSON response:", error);
 			}
-
-			// Delete user
-			for (const i of deletedData) {
-				userImage[i].img.remove();
-				delete userImage[i];
-			}
-			// console.log(userImage);
 		}
 
 		// 	v1
