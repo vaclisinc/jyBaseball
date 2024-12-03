@@ -86,19 +86,20 @@
 		let imagesParentElement;
 		let userImage = {};
 		function updateUserImage(r) {
-			r = JSON.parse(r).slice(1);
+			console.log(r);
 			const deletedData = Object.keys(userImage);
 			for (const user of r) {
 				const userName = user[0];
 				const userImageBase64 = user[1];
 				const lastUserImage = userImage[userName];
+
 				if (!lastUserImage || lastUserImage.imgBase64 !== userImageBase64) {
 					console.log('update', userName);
 					const ele = document.createElement('div');
 					ele.className = 'col-4 col-6-medium col-12-small';
 
 					const imageUrl = 'data:image/png;base64,' + userImageBase64;
-					ele.innerHTML = `<h4 class="fit text-center">${userName}<h4/>
+					ele.innerHTML = `<h4 class="fit text-center">${userName}</h4>
 							<img class="image fit imagePointer" data-name="${userName}" onclick="openImage(this)" src="${imageUrl}" alt=""/>`;
 
 					if (userName === openedImageName)
@@ -115,13 +116,18 @@
 				}
 
 				// Remove exist user
-				deletedData.splice(deletedData.indexOf(userName), 1);
+				const userIndex = deletedData.indexOf(userName);
+				if (userIndex !== -1) {
+					deletedData.splice(userIndex, 1);
+				}
 			}
 
 			// Delete user
 			for (const i of deletedData) {
-				userImage[i].img.remove();
-				delete userImage[i];
+				if (userImage[userName]) {
+					userImage[userName].img.remove();
+					delete userImage[userName];
+				}
 			}
 			// console.log(userImage);
 		}
