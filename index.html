@@ -18,33 +18,17 @@
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 	<script>
 		'use strict';
-		// const apiEndPoint = 'https://script.google.com/macros/s/AKfycbyEqnJGcnvQN8IDg6mXrvWT78l5U8VpxR7Sp6xuzv299M9UyO5qq5VfmH_2BbfR1IehcQ/exec'; //v1
-		const apiEndPoint = 'https://www.vaclis.csa.cs.nthu.edu.tw/'; //v2
+		const apiEndPoint = 'https://script.google.com/macros/s/AKfycbyEqnJGcnvQN8IDg6mXrvWT78l5U8VpxR7Sp6xuzv299M9UyO5qq5VfmH_2BbfR1IehcQ/exec'; //v1
+		// const apiEndPoint = 'https://www.vaclis.csa.cs.nthu.edu.tw/'; //v2
 		function subForm(e) {
 			e.preventDefault();
 			const userData = $("#myForm").serializeArray();
 			console.log(userData);
 			// v1
-			// $.ajax({
-			// 	url: apiEndPoint + '?n=data&t=a',
-			// 	type: 'post',
-			// 	data: JSON.stringify(userData),
-			// 	success: function () {
-			// 		alert("Form Data Submitted :)")
-			// 	},
-			// 	error: function () {
-			// 		alert("There was an error :(")
-			// 	}
-			// });
 			$.ajax({
-				url: apiEndPoint,
+				url: apiEndPoint + '?n=data&t=a',
 				type: 'post',
-				data: JSON.stringify({
-					n: 'data',
-					t: 'a',
-					userData: userData
-				}),
-				contentType: "application/json",
+				data: JSON.stringify(userData),
 				success: function () {
 					alert("Form Data Submitted :)")
 				},
@@ -52,6 +36,23 @@
 					alert("There was an error :(")
 				}
 			});
+			// v2
+			// $.ajax({
+			// 	url: apiEndPoint,
+			// 	type: 'post',
+			// 	data: JSON.stringify({
+			// 		n: 'data',
+			// 		t: 'a',
+			// 		userData: userData
+			// 	}),
+			// 	contentType: "application/json",
+			// 	success: function () {
+			// 		alert("Form Data Submitted :)")
+			// 	},
+			// 	error: function () {
+			// 		alert("There was an error :(")
+			// 	}
+			// });
 
 		}
 
@@ -87,6 +88,7 @@
 		let userImage = {};
 		function updateUserImage(r) {
 			console.log(r);
+			r = JSON.parse(r).slice(1);
 			const deletedData = Object.keys(userImage);
 			for (const user of r) {
 				const userName = user[0];
