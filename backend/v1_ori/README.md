@@ -1,1 +1,2 @@
 This original version finished in freshman year is using google scripts api as API, google sheets as database, python as backend.
+You can easily install the packages by `pip install -r requirements.txt`.
