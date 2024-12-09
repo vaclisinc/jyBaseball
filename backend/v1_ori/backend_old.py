@@ -6,11 +6,14 @@ import io
 import base64
 import requests
 import time
+import hashlib
 
 apiEndpoint = "https://script.google.com/macros/s/AKfycbyEqnJGcnvQN8IDg6mXrvWT78l5U8VpxR7Sp6xuzv299M9UyO5qq5VfmH_2BbfR1IehcQ/exec"
 
 sheet = 'https://docs.google.com/spreadsheets/d/1n3Xt5iemJ3WWjlksEaU6JfNDv_9FX4CStTzjayMRwEU/edit#gid=0'
 url_data = sheet.replace('/edit#gid=', '/export?format=csv&gid=')
+
+last_hash = None
 
 def calculate_avg(df):
     avg_dict = {}
@@ -151,7 +154,25 @@ def refreshData():
     plt.close()
     print('\rDone          ', end="")
 
-
 while True:
-    refreshData()
-    time.sleep(1)
+    try:
+        # 計算 CSV 資料的哈希值
+        response = requests.get(url_data)
+        if response.status_code == 200:
+            new_hash = hashlib.md5(response.content).hexdigest()
+
+            # 檢查資料是否有變動
+            if new_hash != last_hash:
+                print("Data changed. Refreshing...")
+                refreshData()
+                last_hash = new_hash
+            else:
+                print("No changes detected")
+        else:
+            print(f"Failed to fetch data: HTTP {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"Request error: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+
+    time.sleep(10)  # 增加間隔時間
