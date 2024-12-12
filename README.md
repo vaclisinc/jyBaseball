@@ -13,9 +13,9 @@ InningiQ 是一個更全面的 AI 驅動的棒球分析平台，融合了 jyBase
 以下是原 jyBaseball 項目的描述，僅供參考：
 ---
 
-# [jyBaseball](https://vaclisinc.github.io/jyBaseball/) - Baseball Data Digitization and Analysis Platform
+# [jyBaseball](https://vaclis.net/jyBaseball) - Baseball Data Digitization and Analysis Platform
 
-[jyBaseball(棒球紀錄趣)](https://vaclisinc.github.io/jyBaseball/) is a platform designed to digitize traditional paper-based baseball records and provide advanced data analysis tools. Our goal is to support both professional and amateur baseball teams by offering intuitive tools for recording, storing, and analyzing game data. One of our key features is K-Zone batting average analysis, but we place equal emphasis on making baseball data more accessible and actionable by moving away from paper-based systems.
+[jyBaseball(棒球紀錄趣)](https://vaclis.net/jyBaseball) is a platform designed to digitize traditional paper-based baseball records and provide advanced data analysis tools. Our goal is to support both professional and amateur baseball teams by offering intuitive tools for recording, storing, and analyzing game data. One of our key features is K-Zone batting average analysis, but we place equal emphasis on making baseball data more accessible and actionable by moving away from paper-based systems.
 
 >[![jyBaseball](https://raw.githubusercontent.com/vaclisinc/jyBaseball/b09922b168721499f2b2e30d0b84bb3e34f5e21a/preview.jpg)](https://github.com/vaclisinc/jyBaseball/blob/b09922b168721499f2b2e30d0b84bb3e34f5e21a/presentation.pdf)
 ><br>*Click on the picture to view our full presentation PDF*
@@ -62,7 +62,7 @@ InningiQ 是一個更全面的 AI 驅動的棒球分析平台，融合了 jyBase
 
 To use the current version:
 
-1. Visit [jyBaseball](https://vaclisinc.github.io/jyBaseball/)
+1. Visit [jyBaseball](https://vaclis.net/jyBaseball)
 2. Input detailed game data
 3. View stored data on the website
 
